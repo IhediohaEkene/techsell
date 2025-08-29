@@ -175,5 +175,51 @@
     <a href="index.html" class="back-link">← Back to Homepage</a>
   </section>
 
+  <!-- FORM PAGE ONLY — Custom Meta Pixel event: OrderFormView (single-fire) -->
+<script>
+(function () {
+  var EVENT_NAME = 'OrderFormView';
+  var KEY = 'pixel_' + EVENT_NAME + '_fired';
+
+  // Hard guards: stop if we've already fired in this tab/page
+  if (window.__OFV_FIRED || sessionStorage.getItem(KEY) || document.documentElement.dataset.ofvFired === '1') return;
+
+  function markFired() {
+    window.__OFV_FIRED = true;                 // in-page guard
+    sessionStorage.setItem(KEY, '1');          // per-tab session guard
+    document.documentElement.dataset.ofvFired = '1'; // DOM guard
+  }
+
+  function fire(source) {
+    if (window.__OFV_FIRED || sessionStorage.getItem(KEY)) return; // re-check before sending
+    if (typeof fbq === 'function') {
+      fbq('trackCustom', EVENT_NAME, {
+        funnel_stage: 'form_page',
+        path: location.pathname + location.search,
+        referrer: document.referrer || '',
+        source: source,
+        ts: Date.now()
+      });
+      markFired();
+    }
+  }
+
+  // Try once when DOM is ready (guarded)
+  document.addEventListener('DOMContentLoaded', function () { fire('domcontentloaded'); }, { once: true });
+
+  // Also poll briefly for late-loading fbq, but guarded (max ~4s)
+  var tries = 0;
+  var iv = setInterval(function () {
+    if (window.__OFV_FIRED || sessionStorage.getItem(KEY)) { clearInterval(iv); return; }
+    if (typeof fbq === 'function') { clearInterval(iv); fire('ready_poll'); }
+    else if (++tries > 50) { clearInterval(iv); }
+  }, 80);
+
+  // Handle bfcache returns (Safari/Firefox). Guard prevents duplicates.
+  window.addEventListener('pageshow', function (e) { if (e.persisted) fire('pageshow_bfcache'); }, { once: true });
+})();
+</script>
+
 </body>
 </html>
+
