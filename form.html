@@ -116,5 +116,35 @@
       </div>
     </form>
   </div>
+  <script>
+    document.getElementById('adForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    // Collect multiple checkboxes with the same name:
+    const receiveMethods = [];
+    form.querySelectorAll('input[name="receiveMethod"]:checked').forEach(cb => receiveMethods.push(cb.value));
+    data.receiveMethod = receiveMethods;
+
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec', {
+        method: 'POST',
+        mode: 'no-cors', // required if the web app is public and you didn't configure CORS
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+        });
+
+        // Since no-cors prevents reading the response, we just assume success:
+        // Redirect to your thank-you page:
+        window.location.href = '/thank-you.html'; // <-- change to your actual thank-you page URL
+    } catch (err) {
+        alert('There was an error submitting the form.');
+        console.error(err);
+    }
+    });
+</script>
+
 </body>
 </html>
