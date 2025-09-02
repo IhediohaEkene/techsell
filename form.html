@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Get Started - AdVantage Ads</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <div class="logo">
+        <img src="logo.jpg" alt="AdVantage Ads Logo">
+      </div>
+      <div class="header-content">
+        <h1>Get Started with AdVantage Ads</h1>
+        <p class="lead">Complete the form below to launch your advertising campaign</p>
+      </div>
+    </div>
+
+    <form id="adForm" method="POST">
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="whatsapp">WhatsApp Number</label>
+        <input type="text" id="whatsapp" name="whatsapp">
+      </div>
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="product">Product to Advertise <span class="required">*</span></label>
+          <input type="text" id="product" name="product" placeholder='e.g. "JBL Bluetooth Speaker"' required>
+        </div>
+
+        <div class="input-group">
+          <label for="price">Selling Price <span class="required">*</span></label>
+          <input type="text" id="price" name="price" placeholder="Price per unit" required>
+        </div>
+      </div>
+
+      <div class="fieldset-group">
+        <fieldset>
+          <legend>Customer Reception Method <span class="required">*</span></legend>
+          <div class="checkbox-group">
+            <label class="choice-label">
+              <input type="checkbox" name="receiveMethod" value="WhatsApp Messages" required>
+              <span>WhatsApp Messages</span>
+              <small>Chat and close them yourself</small>
+            </label>
+            <label class="choice-label">
+              <input type="checkbox" name="receiveMethod" value="Order Funnel">
+              <span>Order Funnel</span>
+              <small>We collect and confirm orders for you</small>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Previous Advertising Experience <span class="required">*</span></legend>
+          <div class="radio-group">
+            <label class="choice-label"><input type="radio" name="adsBefore" value="Yes" required> Yes</label>
+            <label class="choice-label"><input type="radio" name="adsBefore" value="No"> No</label>
+            <label class="choice-label"><input type="radio" name="adsBefore" value="Tried boosting posts only"> Tried boosting posts only</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="fieldset-group">
+        <fieldset>
+          <legend>Weekly Ad Budget <span class="required">*</span></legend>
+          <div class="radio-group budget-options">
+            <label class="choice-label"><input type="radio" name="budget" value="#30,000" required> ₦30,000</label>
+            <label class="choice-label"><input type="radio" name="budget" value="#40,000"> ₦40,000</label>
+            <label class="choice-label"><input type="radio" name="budget" value="#50,000+"> ₦50,000+</label>
+            <label class="choice-label"><input type="radio" name="budget" value="I'm not sure yet"> I'm not sure yet</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Media Assets <span class="required">*</span></legend>
+          <div class="radio-group">
+            <label class="choice-label">
+              <input type="radio" name="media" value="Yes" required>
+              <span>Yes, I have photos/videos</span>
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="media" value="No, I'll need help with that">
+              <span>No, I need help with content</span>
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="media" value="I'm open to creating UGC">
+              <span>I'm interested in UGC creation</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Any specific requirements or questions?"></textarea>
+      </div>
+
+      <div class="form-footer">
+        <button type="submit">Submit Application</button>
+        <p class="form-note">We'll review your application and respond within 24 hours</p>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
