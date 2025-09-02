@@ -216,22 +216,32 @@ legend {
     text-align: center;
 }
 
-button[type="submit"] {
-    background: linear-gradient(180deg, var(--accent), #7bc922);
-    color: var(--bg-dark);
-    border: none;
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 200px;
+bbutton[type="submit"] {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
-button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(150,224,53,0.15);
+button[type="submit"].loading {
+    background: linear-gradient(180deg, #7bc922, #669e1f);
+    cursor: wait;
+    opacity: 0.9;
+}
+
+button[type="submit"].loading::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--bg-dark);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: button-loading 0.8s linear infinite;
+}
+
+@keyframes button-loading {
+    to { transform: rotate(360deg); }
 }
 
 .form-note {
