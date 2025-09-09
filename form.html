@@ -162,8 +162,10 @@
         try {
             await fetch('https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec', {
             method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(data)
-        });
+          });
+
 
 
 
