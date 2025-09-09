@@ -161,11 +161,11 @@
 
         try {
             await fetch('https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+            method: 'POST',
+            body: new URLSearchParams(data)
+        });
+
+
 
             // Store a slimmed-down version in localStorage for thank-you page
             localStorage.setItem('lastSubmission', JSON.stringify({
