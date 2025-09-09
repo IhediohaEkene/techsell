@@ -104,6 +104,15 @@
     <p>We’ve received your submission. Click the button below to send a message to the team.</p>
     <a href="https://wa.link/xzpig8" class="btn">Send Message</a>
   </div>
+
+  <script>
+    // Call the Google Apps Script Web App to send notification email
+    fetch("https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec?token=OThjYjQyNGMtZDk2Ny00N2MyLWI5ZGItNmZlYzc1NTExN2Yx")
+      .then(res => res.text())
+      .then(text => console.log('Notification result:', text))
+      .catch(err => console.error('Notification failed:', err));
+  </script>
 </body>
 </html>
+
 
