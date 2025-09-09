@@ -139,46 +139,57 @@
   </div>
  
     <script>
-        document.getElementById('adForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+    document.getElementById('adForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        
+        // Disable button and show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+        submitBtn.textContent = 'Processing...';
+
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // Collect multiple checkboxes with the same name:
+        const receiveMethods = [];
+        form.querySelectorAll('input[name="receiveMethod"]:checked')
+            .forEach(cb => receiveMethods.push(cb.value));
+        data.receiveMethod = receiveMethods;
+
+        try {
+            await fetch('https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            // Store a slimmed-down version in localStorage for thank-you page
+            localStorage.setItem('lastSubmission', JSON.stringify({
+              email: data.email || '',
+              fullName: data.fullName || '',
+              whatsapp: data.whatsapp || '',
+              product: data.product || '',
+              price: data.price || '',
+              notes: data.notes || ''
+            }));
+
+            window.location.href = '/thank-you.html';
+        } catch (err) {
+            // Reset button state on error
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            submitBtn.textContent = originalBtnText;
             
-            const form = e.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            
-            // Disable button and show loading state
-            submitBtn.disabled = true;
-            submitBtn.classList.add('loading');
-            submitBtn.textContent = 'Processing...';
+            alert('There was an error submitting the form.');
+            console.error(err);
+        }
+    });
+</script>
 
-            const data = Object.fromEntries(new FormData(form).entries());
-
-            // Collect multiple checkboxes with the same name:
-            const receiveMethods = [];
-            form.querySelectorAll('input[name="receiveMethod"]:checked')
-                .forEach(cb => receiveMethods.push(cb.value));
-            data.receiveMethod = receiveMethods;
-
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbzGJ8PSSdO4ADN_PkZ08Ikwl4YvnO4h2Ok2LLV7HdP99bQlgeZ_bp2cqHJF1AxC4WIgxQ/exec', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                window.location.href = '/thank-you.html';
-            } catch (err) {
-                // Reset button state on error
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('loading');
-                submitBtn.textContent = originalBtnText;
-                
-                alert('There was an error submitting the form.');
-                console.error(err);
-            }
-        });
-    </script>
 
   <!-- FORM PAGE ONLY — Custom Meta Pixel event: OrderFormView (single-fire) -->
 <script>
